@@ -1,0 +1,105 @@
+
+<div *ngIf="this.user">
+  <h4>{{ this.user.mail }}</h4>
+  <h1>{{ this.user.name }}</h1>
+  <form class="example-form" >
+      <h4><small>Agregar un cargo</small></h4>
+
+      <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="dateReg" 
+          placeholder="Choose a date" 
+          [formControl]="this.date"
+          name="regDate"
+          >
+          <mat-datepicker-toggle matSuffix [for]="dateReg" >
+              <i class="material-icons">
+                  calendar_today
+                  </i>
+          </mat-datepicker-toggle>
+          <mat-datepicker #dateReg></mat-datepicker>
+        </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Detalle" name="detail" [(ngModel)]="registro.detalle" >
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Monto" type="number" name="monto" [(ngModel)]="registro.importe" >
+        </mat-form-field>
+        <button class="m-2" mat-raised-button color="primary" (click)="cargarRegistro()">
+          <i class="material-icons">
+            add
+          </i> Registros</button>
+          <hr>
+
+          <mat-form-field class="example-full-width">
+          <input matInput [matDatepicker]="datePay" placeholder="Choose a date" [formControl]="this.date">
+          <mat-datepicker-toggle matSuffix [for]="datePay">
+              <i class="material-icons">
+                  calendar_today
+                  </i>
+          </mat-datepicker-toggle>
+          <mat-datepicker #datePay></mat-datepicker>
+        </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Monto" type="number" >
+        </mat-form-field>
+        <button class="m-2" mat-raised-button color="primary"(click)="cargarPago()">
+          <i class="material-icons">
+              remove
+          </i> Pagos</button>
+
+  </form>
+
+  
+  <div class="row">
+    <div class="col" *ngIf="user.registros.length > 0">
+      <table class="table table-inverse table-inverse table-responsive">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Fecha</th>
+            <th>Detalle</th>
+            <th>Importe</th>
+            <th>Opciones</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reg of user.registros; let i = index">
+              <td>{{reg.fecha | date:'dd/MM/yyyy'}}</td>
+              <td>{{reg.detalle}}</td>
+              <td>{{reg.importe | currency }}</td>
+              <td>  
+                  <button class="m-2" mat-raised-button color="primary"(click)="modificarReg()">
+                      Modificar</button>
+                  <button class="m-2" mat-raised-button color="danger"(click)="eliminarReg()">
+                      Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+    </div>
+    <div class="col" *ngIf="user.pagos.length > 0">
+        <table class="table table-inverse table-inverse table-responsive">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Fecha</th>
+                <th>Importe</th>
+                <th>Opciones</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pay of user.pagos; let i = index">
+                  <td>{{pay.fecha  | date:'dd/MM/yyyy'}}</td>
+                  <td>{{pay.importe | currency }}</td>
+                  <td>  
+                      <button class="m-2" mat-raised-button color="primary"(click)="cargarPago()">
+                          Modificar</button>
+                      <button class="m-2" mat-raised-button color="danger"(click)="cargarPago()">
+                          Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<h1>Crear usuario</h1>
+<hr>
+
+<form novalidate (ngSubmit)="post(forma)" #forma="ngForm" class="needs-validation">
+    <div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Nombre</label>
+          <div class="col-8">
+    
+            <input class="form-control"
+                   type="text"
+                   placeholder="Nombre"
+                   [(ngModel)]="user.name"
+                   required
+                   minlength="5"
+                   name="name"
+                   #name="ngModel">
+    
+            <div *ngIf="name.errors?.required" class="invalid-feedback">
+              Este campo es requerido
+            </div>
+            <div *ngIf="name.errors?.minlength" class="invalid-feedback">
+              el largo del texto debe ser de al menos {{ name.errors.minlength.requiredLength }} letras
+            </div>
+          </div>
+        </div>
+    
+
+    
+      </div>
+    
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Correo</label>
+        <div class="col-md-8">
+    
+          <input class="form-control"
+                 type="email"
+                 placeholder="Correo electrónico"
+                 [(ngModel)]="user.mail"
+                   required
+                   minlength="5"
+                   name="email"
+                   #mail="ngModel"
+                   pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?">
+          
+          <div *ngIf="mail.errors?.pattern">
+            El texto ingresado no corresponde a un mail valido
+          </div>
+    
+        </div>
+      </div>  
+    
+      <div class="form-group row">
+          <label class="col-2 col-form-label">Telefono</label>
+          <div class="col-8">
+    
+            <input class="form-control"
+                   type="number"
+                   placeholder="Telefono"
+                   [(ngModel)]="user.phone"
+                   name="name"
+                   #name="ngModel">
+    
+          </div>
+        </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8" >
+          <button type="submit" class="btn btn-outline-primary" *ngIf="forma.valid">
+            Guardar
+          </button>
+        </div>
+      </div>
+  
+</form>

@@ -1,0 +1,87 @@
+<h1>Home</h1>
+<hr>
+<table class="table" >
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Mail</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Sincronizado</th>
+      <th scope="col">Opciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of dbService.users;let i = index">
+      <th >{{ i + 1 }}</th>
+      <td>{{user.name}}</td>
+      <td>{{user.mail}}</td>
+      <td>{{user.phone}}</td>
+      <td>{{user.sync}}</td>
+      <td>
+        <button class="btn btn-outline-success m-2" (click)="verDetalle(content, user)">
+          Ver
+        </button>
+
+        <button type="button" class="btn btn-outline-danger m-2" (click)="editar(user)">
+          Editar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss" >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ user?.name }}</h4>
+    
+  </div>
+  <div class="modal-body">
+    <p><span>Mail: </span> {{ user?.mail }}</p>
+    <p><span>Creado: </span> {{ user?.fechaCreacion | date : 'short'}}</p>
+
+    <div class="row">
+      <div class="col" *ngIf="user.registros.length > 0">
+        <table class="table table-inverse table-inverse table-responsive">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Fecha</th>
+              <th>Detalle</th>
+              <th>Importe</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reg of user.registros">
+                <td>{{reg.fecha | date:'shortDate'}}</td>
+                <td>{{reg.detalle}}</td>
+                <td>{{reg.importe | currency }}</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="col" *ngIf="user.pagos.length > 0">
+          <table class="table table-inverse table-inverse table-responsive">
+              <thead class="thead-inverse">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Importe</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let pay of user.pagos">
+                    <td>{{pay.fecha | date:'shortDate'}}</td>
+                    <td>{{pay.importe | currency }}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="closeModal()" >Close</button>
+  </div>
+</ng-template>
